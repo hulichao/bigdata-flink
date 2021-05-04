@@ -1,4 +1,4 @@
-package com.lagou.time;
+package com.hoult.time;
 
 import net.minidev.json.JSONUtil;
 import org.apache.flink.api.common.eventtime.*;
@@ -48,7 +48,7 @@ public class WatermarkDemo {
      */
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime); // 处理实践类型
+        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime); // 处理时间类型
         env.getConfig().setAutoWatermarkInterval(1000L); //watermark的周期时间
         env.setParallelism(1);
         DataStreamSource<String> data = env.socketTextStream("linux121", 7777);
