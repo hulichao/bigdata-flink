@@ -45,6 +45,7 @@ public class StateDemo {
                         Tuple2.of(0L, 0L)
                 );
 
+                //运行时上下文
                 sumState = getRuntimeContext().getState(descriptor);
                 super.open(parameters);
             }
