@@ -63,14 +63,14 @@ public class StateDemo {
                 if (currentSum.f0 == 2) {
                     long avarage = currentSum.f1 / currentSum.f0;
                     out.collect(new Tuple2<>(value.f0, avarage));
-                    sumState.clear();
+                    sumState.clear(); //为什么要clear
                 }
 
             }
         });
 
-        flatMaped.print();
-//        flatMaped.addSink(new OperaterStateDemo(2));
+//        flatMaped.print();
+        flatMaped.addSink(new OperaterStateDemo(2));
         env.execute();
     }
 }

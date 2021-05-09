@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 1、在Flink中，做出OperatorState有两种方式：1、实现CheckpointedFunction接口  2、实现ListCheckPointed
+ * 1、在Flink中，做出OperatorState有两种方式：
+ *      (1)、实现CheckpointedFunction接口
+ *      (2)、实现ListCheckPointed
  * 2、两个方法：initializeState/snapshotState
  * initializeState: 每一个Function在最开始的实例化的时候调用，方法内，实例化状态
  * snapshotState：每次checkpoint的时候被调用，将操作的最新数据放到最新的检查点中
@@ -36,7 +38,7 @@ public class OperaterStateDemo implements SinkFunction<Tuple2<Long,Long>>, Check
     @Override
     public void snapshotState(FunctionSnapshotContext context) throws Exception {
         System.out.println("....snapshotState");
-        this.operatorState.clear();
+        this.operatorState.clear(); //为什么要清空
         for (Tuple2<Long,Long> element : bufferedElements) {
             operatorState.add(element);
         }
@@ -52,7 +54,7 @@ public class OperaterStateDemo implements SinkFunction<Tuple2<Long,Long>>, Check
                 })
         );
         operatorState = context.getOperatorStateStore().getListState(operatarDemoDescriptor);
-        if(context.isRestored()) {//说明程序异常中断...nonono...just datasource was wrong,程序仍在努力容错
+        if(context.isRestored()) {  //说明程序异常中断...nonono...just datasource was wrong,程序仍在努力容错
             for (Tuple2<Long,Long> element: operatorState.get()) {
                 bufferedElements.add(element);
             }
@@ -71,7 +73,7 @@ public class OperaterStateDemo implements SinkFunction<Tuple2<Long,Long>>, Check
             for(Tuple2<Long,Long> element : bufferedElements) {
                 System.out.println("...out:" + element);
             }
-            bufferedElements.clear();
+            bufferedElements.clear(); // 缓存时候清空
         }
     }
 }
