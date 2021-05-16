@@ -79,7 +79,8 @@ public class LoginDemo {
                         return value.getState().equals("fail");
                     }
                 })
-                .within(Time.seconds(5));
+                .within(Time.seconds(5)); // 5s内，连续两次失败
+
 
         //5、在数据流上进行模式匹配
         PatternStream<LoginBean> patternStream = CEP.pattern(keyed, pattern);
